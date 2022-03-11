@@ -1,10 +1,11 @@
+use quinio
 db.createCollection("Transaction",{
 	validator: {
 		$jsonSchema: {
 			bsonType:"object",
-			required: ["id","origin","type","walletId","foreignTxId"],
+			required: ["idTransaction","origin","type","walletId"],
 			properties: {
-				id: {
+				idTransaction: {
 					bsonType: "string"
 				},
 				origin: {
@@ -35,10 +36,10 @@ db.createCollection("Transaction",{
 					bsonType: "number"
 				},
 				expirationDate: {
-					bsonType: "timestamp"
+					bsonType: "date"
 				},
 				createdAt: {
-					bsonType: "timestamp"
+					bsonType: "date"
 				},
 				status: {
 					bsonType: "string"
@@ -47,7 +48,7 @@ db.createCollection("Transaction",{
 					bsonType: "string"
 				},
 				originDetails: {
-					bsonType: "array",
+					bsonType: "object",
 					items: {
 						bsonType:"object",
 						required: ["tax","group","store","total","cardcode","cardname","payments","subtotal","actualdate","businessdate","transactionkey"],
@@ -134,10 +135,10 @@ db.createCollection("Transaction",{
 								bsonType: "number"
 							},
 							actualdate: {
-								bsonType: "timestamp"
+								bsonType: "date"
 							},
 							businessdate: {
-								bsonType: "timestamp"
+								bsonType: "date"
 							},
 							transactionkey: {
 								bsonType: "string"
@@ -155,3 +156,4 @@ db.createCollection("Transaction",{
 		}
 	}
 })
+
