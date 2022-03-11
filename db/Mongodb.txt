@@ -1,0 +1,157 @@
+db.createCollection("Transaction",{
+	validator: {
+		$jsonSchema: {
+			bsonType:"object",
+			required: ["id","origin","type","walletId","foreignTxId"],
+			properties: {
+				id: {
+					bsonType: "string"
+				},
+				origin: {
+					bsonType: "string"
+				},
+				type: {
+					bsonType: "string"
+				},
+				walletId: {
+					bsonType: "string"
+				},
+				orderId: {
+					bsonType: "string"
+				},
+				foreignTxId: {
+					bsonType: "string"
+				},
+				expenses: {
+					bsonType: "string"
+				},
+				saleAmount: {
+					bsonType: "number"
+				},
+				rewardAmount: {
+					bsonType: "number"
+				},
+				amountUsed: {
+					bsonType: "number"
+				},
+				expirationDate: {
+					bsonType: "timestamp"
+				},
+				createdAt: {
+					bsonType: "timestamp"
+				},
+				status: {
+					bsonType: "string"
+				},
+				collaboratorId: {
+					bsonType: "string"
+				},
+				originDetails: {
+					bsonType: "array",
+					items: {
+						bsonType:"object",
+						required: ["tax","group","store","total","cardcode","cardname","payments","subtotal","actualdate","businessdate","transactionkey"],
+						properties: {
+							tax: {
+								bsonType: "number"
+							},
+							group: {
+								bsonType: "string"
+							},
+							store: {
+								bsonType: "string"
+							},
+							total: {
+								bsonType: "number"
+							},
+							details: {
+								bsonType: "array",
+								items: {
+									bsonType:"object",
+									required: ["qty","tax","type","total","category","discount","itemcode","itemname","subtotal","transactionkey"],
+									properties: {
+										qty: {
+											bsonType: "number"
+										},
+										tax: {
+											bsonType: "number"
+										},
+										type: {
+											bsonType: "string"
+										},
+										total: {
+											bsonType: "number"
+										},
+										category: {
+											bsonType: "string"
+										},
+										discount: {
+											bsonType: "number"
+										},
+										itemcode: {
+											bsonType: "string"
+										},
+										itemname: {
+											bsonType: "string"
+										},
+										subtotal: {
+											bsonType: "number"
+										},
+										transactionkey: {
+											bsonType: "string"
+										}
+									}
+								}
+							},
+							cardcode: {
+								bsonType: "string"
+							},
+							cardname: {
+								bsonType: "string"
+							},
+							payments: {
+								bsonType: "array",
+								items: {
+									bsonType:"object",
+									required: ["type","amount","reference","transactionkey"],
+									properties: {
+										type: {
+											bsonType: "string"
+										},
+										amount: {
+											bsonType: "number"
+										},
+										reference: {
+											bsonType: "string"
+										},
+										transactionkey: {
+											bsonType: "string"
+										}
+									}
+								}
+							},
+							subtotal: {
+								bsonType: "number"
+							},
+							actualdate: {
+								bsonType: "timestamp"
+							},
+							businessdate: {
+								bsonType: "timestamp"
+							},
+							transactionkey: {
+								bsonType: "string"
+							},
+						}	
+					}
+				},
+				rewardsDetails: {
+					bsonType: "string"
+				},
+				userId: {
+					bsonType: "string"
+				}
+			}
+		}
+	}
+})
