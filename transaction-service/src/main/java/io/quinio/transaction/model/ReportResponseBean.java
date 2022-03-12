@@ -11,6 +11,10 @@ import lombok.Data;
 @Data
 public class ReportResponseBean extends ResponseBean {
 	/**
+	 * Numero de paginas
+	 */
+	private Integer numberOfPages;
+	/**
 	 * Informacion del reporte
 	 */
 	private List<ReportBean> data;

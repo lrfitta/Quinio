@@ -3,6 +3,8 @@ package io.quinio.transaction.model;
 import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import lombok.Data;
 
 /**
@@ -50,10 +52,12 @@ public class OriginBean {
 	/**
 	 * Campo actualdate
 	 */
+	@JsonFormat(timezone = "UTC")
 	private Date actualdate;
 	/**
 	 * Campo businessdate
 	 */
+	@JsonFormat(timezone = "UTC")
 	private Date businessdate;
 	/**
 	 * Campo transactionkey

@@ -1,7 +1,5 @@
 package io.quinio.transaction.model;
 
-import java.math.BigDecimal;
-
 import lombok.Data;
 
 /**
@@ -13,11 +11,11 @@ public class DetailBean {
 	/**
 	 * Campo qty
 	 */
-	private BigDecimal qty;
+	private Double qty;
 	/**
 	 * Campo tax
 	 */
-	private BigDecimal tax;
+	private Double tax;
 	/**
 	 * Campo type
 	 */
@@ -25,7 +23,7 @@ public class DetailBean {
 	/**
 	 * Campo total
 	 */
-	private BigDecimal total;
+	private Double total;
 	/**
 	 * Campo category
 	 */
@@ -33,7 +31,7 @@ public class DetailBean {
 	/**
 	 * Campo discount
 	 */
-	private BigDecimal discount;
+	private Double discount;
 	/**
 	 * Campo itemcode
 	 */ 
@@ -45,7 +43,7 @@ public class DetailBean {
 	/**
 	 * Campo subtotal
 	 */
-	private BigDecimal subtotal;
+	private Double subtotal;
 	/**
 	 * Campo subtotal
 	 */

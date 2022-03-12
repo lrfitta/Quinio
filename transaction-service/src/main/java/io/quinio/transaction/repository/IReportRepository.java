@@ -1,5 +1,6 @@
 package io.quinio.transaction.repository;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -25,7 +26,7 @@ public interface IReportRepository extends MongoRepository<ReportBean, String> {
 	 * @param startWeek fecha de busqueda
 	 * @return
 	 */
-	public List<ReportBean> findByStartWeek(Date startWeek);
+	public List<ReportBean> findByStartWeek(Calendar startWeek);
 	
 	/**
 	 * Busqueda por numero de semana
@@ -51,4 +52,14 @@ public interface IReportRepository extends MongoRepository<ReportBean, String> {
 	 */
 	@Query(sort = "{startWeek:-1}", value = "{startWeek: {$gte: ?0, $lte: ?1}}")
 	public Page<ReportBean> findByRangeDate(Date startDate, Date endDate, Pageable page);
+	
+	/**
+	 * Busqueda por rango de fecha
+	 * @param startDate Fecha de inicio 
+	 * @param endDate Fecha de fin
+	 * @param page numero de pagina
+	 * @return Numero de elementos
+	 */
+	@Query(value = "{startWeek: {$gte: ?0, $lte: ?1}}", count = true)
+	public Integer findByRangeDateCount(Date startDate, Date endDate);
 }

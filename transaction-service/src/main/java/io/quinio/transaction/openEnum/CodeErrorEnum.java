@@ -6,7 +6,8 @@ package io.quinio.transaction.openEnum;
  */
 public enum CodeErrorEnum {
 	SANDBOX("001"),
-	NO_DATA_REPORT("002");
+	NO_DATA_REPORT("002"),
+	FORMAT_DATE("003");
 	/**
 	 * Codigo de error
 	 */

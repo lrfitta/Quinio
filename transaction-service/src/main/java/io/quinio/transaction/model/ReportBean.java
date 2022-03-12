@@ -5,6 +5,10 @@ import java.util.Date;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonFormat.Shape;
+
+import io.quinio.transaction.utils.Constants;
 import lombok.Data;
 
 /**
@@ -34,6 +38,7 @@ public class ReportBean {
 	/**
 	 * Column startWeek
 	 */
+	@JsonFormat(shape = Shape.STRING, timezone = "UTC", pattern = Constants.FORMAT_DATE_GRAPH)
 	private Date startWeek;
 	/**
 	 * Column numberWeek

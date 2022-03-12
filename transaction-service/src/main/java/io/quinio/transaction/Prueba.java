@@ -1,16 +1,16 @@
 package io.quinio.transaction;
 
+import java.time.ZoneId;
 import java.util.Calendar;
+import java.util.TimeZone;
 
 public class Prueba {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		Calendar calendar = Calendar.getInstance();
-		System.out.println(calendar.get(Calendar.WEEK_OF_YEAR));
-		System.out.println(calendar.get(Calendar.DAY_OF_WEEK));
-		Calendar first = getFirstDayOfWeek(calendar);
-		getLastWeek(first);
+		Integer tmp = 9;
+		Integer numberOfPages = tmp / 3 + (tmp % 4 == 0 ? 0 : 1);
+		System.out.println(numberOfPages);
 	}
 	
 	private static Calendar getFirstDayOfWeek(final Calendar calendar) {

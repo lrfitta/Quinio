@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
+import java.util.TimeZone;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +15,8 @@ import io.quinio.transaction.model.GraphBean;
 import io.quinio.transaction.model.ReportBean;
 import io.quinio.transaction.model.TransactionBean;
 import io.quinio.transaction.repository.ITransactionRepository;
+import io.quinio.transaction.service.ICalendarService;
 import io.quinio.transaction.service.IGraphService;
-import io.quinio.transaction.service.IHelperService;
 import io.quinio.transaction.utils.Constants;
 
 /**
@@ -26,7 +27,7 @@ import io.quinio.transaction.utils.Constants;
 public class GraphService implements IGraphService {
 	
 	@Autowired
-	private IHelperService helperService;
+	private ICalendarService calendarService;
 	@Autowired
 	private ITransactionRepository transactionRepository;
 	/**
@@ -38,6 +39,7 @@ public class GraphService implements IGraphService {
 	public List<GraphBean> weekly(List<ReportBean> data) {
 		List<GraphBean> graph = new ArrayList<GraphBean>();
 		SimpleDateFormat dateFormat = new SimpleDateFormat(Constants.FORMAT_DATE_GRAPH);
+		dateFormat.setTimeZone(TimeZone.getTimeZone(Constants.DEFAULT_TIME_ZONE));
 		graph = data.stream().map(val -> {
 			GraphBean bean = new GraphBean();
 			bean.setLabel(dateFormat.format(val.getStartWeek()));
@@ -56,15 +58,14 @@ public class GraphService implements IGraphService {
 	public List<GraphBean> daily(List<ReportBean> data) {
 		List<GraphBean> graph = new ArrayList<GraphBean>();
 		SimpleDateFormat dateFormat = new SimpleDateFormat(Constants.FORMAT_DATE_GRAPH);
+		dateFormat.setTimeZone(TimeZone.getTimeZone(Constants.DEFAULT_TIME_ZONE));
 		
-		Calendar start = Calendar.getInstance();
-		Calendar end = Calendar.getInstance();
+		Calendar start = null;
+		Calendar end = null;
 		List<TransactionBean> transactions = null;
 		for(ReportBean dato : data) {
-			start.setTime(dato.getStartWeek());
-			start = helperService.setTimeZero(start);
-			end = helperService.getEndDayOfWeek(start);
-			
+			start = calendarService.createCalendarTimeZone(dato.getStartWeek());
+			end = calendarService.getEndDayOfWeek(start);
 			transactions = transactionRepository.findGraphDaily(start.getTime(), end.getTime());
 			transactions.forEach(transaction -> {
 				mapToBean(graph, transaction, dateFormat);

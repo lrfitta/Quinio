@@ -1,7 +1,5 @@
 package io.quinio.transaction.model;
 
-import java.util.Date;
-
 import lombok.Data;
 
 /**
@@ -21,9 +19,9 @@ public class ReportRequestBean {
 	/**
 	 * Fecha de inicio
 	 */
-	private Date startDate;
+	private String startDate;
 	/**
 	 * Fecha de fin
 	 */
-	private Date endDate;
+	private String endDate;
 }

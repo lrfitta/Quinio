@@ -1,5 +1,7 @@
 package io.quinio.transaction.service.impl;
 
+import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -28,8 +30,8 @@ import io.quinio.transaction.openEnum.CodeErrorEnum;
 import io.quinio.transaction.openEnum.ResultEnum;
 import io.quinio.transaction.repository.IReportRepository;
 import io.quinio.transaction.repository.ITransactionRepository;
+import io.quinio.transaction.service.ICalendarService;
 import io.quinio.transaction.service.IGraphService;
-import io.quinio.transaction.service.IHelperService;
 import io.quinio.transaction.service.ITransactionService;
 import io.quinio.transaction.utils.Constants;
 
@@ -51,7 +53,7 @@ public class TransactionService implements ITransactionService {
 	@Autowired
 	private IReportRepository reportRepository;
 	@Autowired
-	private IHelperService helperService;
+	private ICalendarService calendarService;
 	@Autowired
 	private IGraphService graphService;
 
@@ -103,9 +105,6 @@ public class TransactionService implements ITransactionService {
 			transactions.forEach(transaction -> {
 				List<TransactionBean> tmp = transactionRepository.findByIdTransaction(transaction.getIdTransaction());
 				if (tmp.isEmpty()) {
-					Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
-					calendar.setTime(transaction.getCreatedAt());
-					transaction.setCreatedAt(calendar.getTime());
 					transactionRepository.save(transaction);
 					processTransaction(transaction, reports);
 				}
@@ -128,18 +127,19 @@ public class TransactionService implements ITransactionService {
 		if (Constants.TYPE_BONUS.equals(type) || Constants.TYPE_BONUS_ADMIN.equals(type)) {
 			Double salesAmount = transaction.getSaleAmount() == null ? 0.0 : transaction.getSaleAmount();
 			report.setBonusTransaction(report.getBonusTransaction() + 1);
-			report.setSales(report.getSales() + salesAmount);
-			report.setBonusAmount(report.getBonusAmount() + amount);
+			report.setSales(new BigDecimal(report.getSales() + salesAmount).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
+			report.setBonusAmount(new BigDecimal(report.getBonusAmount() + amount).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
 		}
+		
 
 		if (Constants.TYPE_REDEEM.equals(type)) {
 			report.setRedemptionTransaction(report.getRedemptionTransaction() + 1);
-			report.setRedeemedAmount(report.getRedeemedAmount() + amount);
+			report.setRedeemedAmount(new BigDecimal(report.getRedeemedAmount() + amount).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
 		}
 
 		if (Constants.TYPE_EXPIRATION.equals(type)) {
 			report.setExpireTransaction(report.getExpireTransaction() + 1);
-			report.setExpireAmount(report.getExpireAmount() + amount);
+			report.setExpireAmount(new BigDecimal(report.getExpireAmount() + amount).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
 		}
 		calculateAvailableBalance(report);
 	}
@@ -150,17 +150,15 @@ public class TransactionService implements ITransactionService {
 	 * @param report reporte a calcular
 	 */
 	private void calculateAvailableBalance(ReportBean report) {
-		Calendar firstDayOfWeek = Calendar.getInstance();
-		firstDayOfWeek.setTime(report.getStartWeek());
-
-		Calendar lastWeek = helperService.getLastWeek(firstDayOfWeek);
-		List<ReportBean> reportsLastWeek = reportRepository.findByStartWeek(lastWeek.getTime());
+		Calendar calendar = calendarService.createCalendarTimeZone(report.getStartWeek());
+		Calendar lastWeek = calendarService.getLastWeek(calendar);
+		List<ReportBean> reportsLastWeek = reportRepository.findByStartWeek(lastWeek);
 		Double balanceLastWeek = 0.0;
 		if (reportsLastWeek != null && !reportsLastWeek.isEmpty()) {
 			balanceLastWeek = reportsLastWeek.get(0).getAvailableBalance();
 		}
-		report.setAvailableBalance(
-				report.getBonusAmount() - report.getExpireAmount() + report.getRedeemedAmount() + balanceLastWeek);
+		report.setAvailableBalance(new BigDecimal(report.getBonusAmount()
+				- report.getExpireAmount() + report.getRedeemedAmount() + balanceLastWeek).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
 	}
 
 	/**
@@ -187,15 +185,13 @@ public class TransactionService implements ITransactionService {
 	 * @return Objeto del tipo report con la fecha inicio y numero de semana
 	 */
 	private ReportBean calculateDates(Date date, final List<ReportBean> reports) {
-		Calendar createdAt = Calendar.getInstance();
-		createdAt.setTime(date);
+		Calendar createdAt = calendarService.createCalendarTimeZone(date);
 		int numberOfWeek = createdAt.get(Calendar.WEEK_OF_YEAR);
 		ReportBean report = getReportByNumberOfWeek(reports, numberOfWeek);
 		if (report != null) {
 			return report;
 		}
-		Calendar firstDay = helperService.getFirstDayOfWeek(createdAt);
-		firstDay.setTimeZone(TimeZone.getTimeZone("UTC"));
+		Calendar firstDay = calendarService.getFirstDayOfWeek(createdAt);
 		report = new ReportBean();
 		report.setNumberWeek(numberOfWeek);
 		report.setStartWeek(firstDay.getTime());
@@ -213,28 +209,54 @@ public class TransactionService implements ITransactionService {
 	@Override
 	public ReportResponseBean getReport(final ReportRequestBean request) {
 		ReportResponseBean response = new ReportResponseBean();
-		response.setResult(ResultEnum.SUCCESS);
-		Integer page = request.getPage();
-		Integer size = request.getSize();
-		Date startDate = request.getStartDate();
-		Date endDate = request.getEndDate();
-		LOGGER.info("Page:" + page);
-		LOGGER.info("Size:" + size);
+		String start = request.getStartDate();
+		String end = request.getEndDate();
+		Calendar startDate = Calendar.getInstance(TimeZone.getTimeZone(Constants.DEFAULT_TIME_ZONE));
+		Calendar endDate = Calendar.getInstance(TimeZone.getTimeZone(Constants.DEFAULT_TIME_ZONE));
+		LOGGER.info("Page:" + request.getPage());
+		LOGGER.info("Size:" + request.getSize());
 		LOGGER.info("Start Date: " + request.getStartDate());
 		LOGGER.info("End Date: " + request.getEndDate());
-		if (page == null) {
-			page = 0;
+		SimpleDateFormat dateFormat = new SimpleDateFormat(Constants.FORMAT_DATE_GRAPH);
+		dateFormat.setTimeZone(TimeZone.getTimeZone(Constants.DEFAULT_TIME_ZONE));
+		if (request.getPage() == null) {
+			request.setPage(0);
 		}
-		if (size == null) {
-			size = Constants.DEFAULT_NUMBER_OF_ROWS_REPORT;
+		if (request.getSize() == null) {
+			request.setSize(Constants.DEFAULT_NUMBER_OF_ROWS_REPORT);
 		}
-		if (startDate == null) {
-			startDate = new Date();
+		try {
+			if (!StringUtils.isBlank(start)) {
+				startDate.setTime(dateFormat.parse(start));
+			}
+			if (!StringUtils.isBlank(end)) {
+				endDate.setTime(dateFormat.parse(end));
+			}
+			response = generateReportData(request.getPage(), request.getSize(), startDate.getTime(), endDate.getTime());
+		} catch(Exception exception) {
+			LOGGER.error(exception);
+			response.setCodeError(CodeErrorEnum.FORMAT_DATE);
+			response.setDescription("El formato de las fechas es incorrecto");
+			response.setResult(ResultEnum.ERROR);
 		}
-		if (endDate == null) {
-			endDate = new Date();
-		}
+		return response;
+	}
+	
+	/**
+	 * @param page Numero de pagina
+	 * @param size Numero de elementos
+	 * @param startDate Fecha de inicio
+	 * @param endDate Fecha de fin
+	 */
+	private ReportResponseBean generateReportData(final Integer page, final Integer size, Date startDate, Date endDate) {
+		ReportResponseBean response = new ReportResponseBean();
+		response.setResult(ResultEnum.SUCCESS);
 		Pageable paging = PageRequest.of(page, size);
+		
+		Integer tmp = reportRepository.findByRangeDateCount(startDate, endDate);
+		Integer numberOfPages = tmp / size + (tmp % size == 0 ? 0 : 1);
+		response.setNumberOfPages(numberOfPages);
+		
 		Page<ReportBean> pagina = reportRepository.findByRangeDate(startDate, endDate, paging);
 		if (pagina.hasContent()) {
 			List<ReportBean> data = pagina.getContent();

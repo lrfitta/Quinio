@@ -1,12 +1,13 @@
 package io.quinio.transaction.service;
 
 import java.util.Calendar;
+import java.util.Date;
 
 /**
  * @author Luis Angel Rodriguez Fitta
  * Servicio de utilerias
  */
-public interface IHelperService {
+public interface ICalendarService {
 	/**
 	 * Calcula el primer dia de la semana apartir de una fecha
 	 * @param calendar  fecha de la que se quiere calcular el primer dia
@@ -27,10 +28,22 @@ public interface IHelperService {
 	 * @return ultimo dia de la semana
 	 */
 	public Calendar getEndDayOfWeek(final Calendar calendar);
+	/**
+	 * Crea un calendar con un timezone
+	 * @param date Date a transformar
+	 * @return
+	 */
+	public Calendar createCalendarTimeZone(Date date);
 	
 	/**
-	 * @param calendar Calendario a setear el horario
-	 * @return Calendar con hora zero
+	 * Setea la hora 00:00:00
+	 * @param calendar Calendar a modificar
 	 */
-	public Calendar setTimeZero(final Calendar calendar);
+	public void setTimeZero(Calendar calendar);
+	
+	/**
+	 * Setea la hora 23:59:59
+	 * @param calendar Calendar a modificar
+	 */
+	public void setTimeEndDate(Calendar calendar);
 }

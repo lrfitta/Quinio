@@ -4,6 +4,10 @@ package io.quinio.transaction.utils;
  * @author Luis Angel Rodriguez Fitta
  * Int
  */
+/**
+ * @author Luis Angel Rodriguez Fitta
+ *
+ */
 public interface Constants {
 	/**
 	 * Numero default del numero de registros por pagina para la busqueda de transacciones
@@ -38,4 +42,8 @@ public interface Constants {
 	 * Formato de fecha para la geenracion de graficas
 	 */
 	String FORMAT_DATE_GRAPH = "dd-MM-yyyy";
+	/**
+	 * Time zone default
+	 */
+	String DEFAULT_TIME_ZONE = "UTC";
 }
