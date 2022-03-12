@@ -1,0 +1,12 @@
+{
+  "/api/*": {
+    "target": "https://m7d2ur0kqa.execute-api.us-east-1.amazonaws.com/development/transactions",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/api/settings": "/api/app/settings",
+      "^/api": ""
+    }
+  }
+}

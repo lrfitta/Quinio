@@ -1,0 +1,21 @@
+table {
+    width: 80%;
+    margin: auto;
+}
+
+#search {
+    width: 40%;
+    margin: auto;
+    display: flow-root;
+}
+
+#paginator {
+    width: 40%;
+    margin: auto;
+    display: flow-root;
+}
+
+
+th.mat-sort-header-sorted {
+    color: black;
+  }

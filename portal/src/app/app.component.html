@@ -1,0 +1,65 @@
+<br/>
+
+<mat-form-field appearance="fill" id="search">
+  <input matInput type="text" (keyup)="doFilter($event)" placeholder="Filter" onkeypress="return (event.charCode >= 48 && event.charCode <= 57)">
+</mat-form-field>
+<table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)" class="mat-elevation-z8">
+  <ng-container matColumnDef="startWeek">
+    <th mat-header-cell mat-sort-header *matHeaderCellDef> Fecha Inicio Semana </th>
+    <td mat-cell *matCellDef="let element"> {{element.startWeek | date: 'd/MM/yyyy'}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="numberWeek">
+    <th mat-header-cell mat-sort-header *matHeaderCellDef> Numero de la semana </th>
+    <td mat-cell *matCellDef="let element"> {{element.numberWeek}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="bonusTransaction">
+    <th mat-header-cell mat-sort-header *matHeaderCellDef> # de Transacciones de Bonificaci&oacute;n </th>
+    <td mat-cell *matCellDef="let element"> {{element.bonusTransaction}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="sales">
+    <th mat-header-cell mat-sort-header *matHeaderCellDef> Ventas totales </th>
+    <td mat-cell *matCellDef="let element"> {{element.sales | currency: 'USD'}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="bonusAmount">
+    <th mat-header-cell mat-sort-header *matHeaderCellDef> Monto bonificado </th>
+    <td mat-cell *matCellDef="let element"> {{element.bonusAmount | currency: 'USD'}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="redemptionTransaction">
+    <th mat-header-cell mat-sort-header *matHeaderCellDef> # de Transacciones de Redenci&oacute;n </th>
+    <td mat-cell *matCellDef="let element"> {{element.redemptionTransaction}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="redeemedAmount">
+    <th mat-header-cell  mat-sort-header *matHeaderCellDef> Monto Redimido </th>
+    <td mat-cell *matCellDef="let element"> {{element.redeemedAmount | currency: 'USD'}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="expireTransaction">
+    <th mat-header-cell mat-sort-header *matHeaderCellDef> # de Transacciones de Expiraci&oacute;n</th>
+    <td mat-cell *matCellDef="let element"> {{element.expireTransaction}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="expireAmount">
+    <th mat-header-cell mat-sort-header *matHeaderCellDef> Monto Expirado </th>
+    <td mat-cell *matCellDef="let element"> {{element.expireAmount | currency: 'USD'}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="availableBalance">
+    <th mat-header-cell mat-sort-header *matHeaderCellDef> Saldo Disponible en Monedero </th>
+    <td mat-cell *matCellDef="let element"> {{element.availableBalance | currency: 'USD'}} </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+</table>
+<br/>
+<br/>
+<div id="paginator">
+  <button mat-raised-button (click)="paginator(false)">Anterior</button><span style="margin-left: 70%"><button mat-raised-button  (click)="paginator(true)">Siguiente</button></span>
+</div>
