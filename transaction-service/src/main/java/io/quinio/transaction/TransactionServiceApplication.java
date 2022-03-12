@@ -1,6 +1,5 @@
 package io.quinio.transaction;
 
-import java.util.List;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
@@ -9,8 +8,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-import io.quinio.transaction.model.ReportBean;
 import io.quinio.transaction.model.ReportRequestBean;
+import io.quinio.transaction.model.ReportResponseBean;
 import io.quinio.transaction.model.ResponseBean;
 import io.quinio.transaction.service.ITransactionService;
 
@@ -36,9 +35,9 @@ public class TransactionServiceApplication {
     }
 	
 	@Bean
-	public Function<ReportRequestBean, List<ReportBean>> getReport() {
+	public Function<ReportRequestBean, ReportResponseBean> getReport() {
 		return value -> {
-			return transactionService.getReport(value.getPage(), value.getSize());
+			return transactionService.getReport(value);
 		};
 	}
 	

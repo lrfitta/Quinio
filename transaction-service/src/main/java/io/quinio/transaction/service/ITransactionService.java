@@ -1,9 +1,8 @@
 package io.quinio.transaction.service;
 
-import java.util.List;
-
 import io.quinio.transaction.exception.QuinioException;
-import io.quinio.transaction.model.ReportBean;
+import io.quinio.transaction.model.ReportRequestBean;
+import io.quinio.transaction.model.ReportResponseBean;
 import io.quinio.transaction.model.ResponseBean;
 
 /**
@@ -23,6 +22,6 @@ public interface ITransactionService {
 	 * @param size Numero de registros
 	 * @return
 	 */
-	public List<ReportBean> getReport(final Integer page, final Integer size);
+	public ReportResponseBean getReport(final ReportRequestBean request);
 
 }

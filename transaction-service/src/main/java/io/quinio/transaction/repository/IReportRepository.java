@@ -41,4 +41,14 @@ public interface IReportRepository extends MongoRepository<ReportBean, String> {
 	 */
 	@Query(sort = "{startWeek:-1}", value = "{}")
 	public Page<ReportBean> findAll(Pageable page);
+	
+	/**
+	 * Busqueda por rango de fecha
+	 * @param startDate Fecha de inicio 
+	 * @param endDate Fecha de fin
+	 * @param page numero de pagina
+	 * @return Lista de report
+	 */
+	@Query(sort = "{startWeek:-1}", value = "{startWeek: {$gte: ?0, $lte: ?1}}")
+	public Page<ReportBean> findByRangeDate(Date startDate, Date endDate, Pageable page);
 }

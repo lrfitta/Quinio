@@ -1,4 +1,4 @@
-package io.quinio.transaction.dao;
+package io.quinio.transaction;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 

@@ -34,4 +34,8 @@ public interface Constants {
 	 * Tipo bonificacion expiracion
 	 */
 	String TYPE_EXPIRATION = "expiration";
+	/**
+	 * Formato de fecha para la geenracion de graficas
+	 */
+	String FORMAT_DATE_GRAPH = "dd-MM-yyyy";
 }

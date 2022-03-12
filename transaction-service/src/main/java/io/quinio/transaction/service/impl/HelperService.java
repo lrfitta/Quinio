@@ -33,8 +33,8 @@ public class HelperService implements IHelperService {
 		firstDay.set(Calendar.MINUTE, 0);
 		firstDay.set(Calendar.SECOND, 0);
 		firstDay.set(Calendar.MILLISECOND, 0);
-		LOGGER.info("Fecha a calcular: " + calendar.getTime());
-		LOGGER.info("Dia de inicio de la semana: " + firstDay.getTime());
+		LOGGER.info("Fecha a calcular (getFirstDayOfWeek): " + calendar.getTime());
+		LOGGER.info("Dia de inicio de la semana (getFirstDayOfWeek): " + firstDay.getTime());
 		return firstDay;
 	}
 	/**
@@ -51,9 +51,41 @@ public class HelperService implements IHelperService {
 		week.set(Calendar.MINUTE, 0);
 		week.set(Calendar.SECOND, 0);
 		week.set(Calendar.MILLISECOND, 0);
-		LOGGER.info("Fecha a calcular: " + calendar.getTime());
-		LOGGER.info("Semana pasada: " + week.getTime());
+		LOGGER.info("Fecha a calcular (getLastWeek): " + calendar.getTime());
+		LOGGER.info("Semana pasada (getLastWeek): " + week.getTime());
 		return week;
+	}
+	
+	/**
+	 * Calcula el ultimo dia de la semana
+	 * @param calendar Fecha para el calculo
+	 * @return ultimo dia de la semana
+	 */
+	@Override
+	public Calendar getEndDayOfWeek(Calendar calendar) {
+		Calendar end = Calendar.getInstance();
+		end.setTime(calendar.getTime());
+		end.add(Calendar.DATE, 6);
+		end.set(Calendar.HOUR, 23);
+		end.set(Calendar.MINUTE, 59);
+		end.set(Calendar.SECOND, 59);
+		end.set(Calendar.MILLISECOND, 999);
+		LOGGER.info("Fecha a calcular (getEndDayOfWeek): " + calendar.getTime());
+		LOGGER.info("Semana pasada (getEndDayOfWeek): " + end.getTime());
+		return end;
+	}
+
+	/**
+	 * @param calendar Calendario a setear el horario
+	 * @return Calendar con hora zero
+	 */
+	@Override
+	public Calendar setTimeZero(Calendar calendar) {
+		calendar.set(Calendar.HOUR, 0);
+		calendar.set(Calendar.MINUTE, 0);
+		calendar.set(Calendar.SECOND, 0);
+		calendar.set(Calendar.MILLISECOND, 0);
+		return calendar;
 	}
 	
 	

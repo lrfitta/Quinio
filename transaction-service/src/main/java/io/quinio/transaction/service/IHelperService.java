@@ -20,4 +20,17 @@ public interface IHelperService {
 	 * @return Fecha de la semana pasada
 	 */
 	public Calendar getLastWeek(final Calendar calendar);
+	
+	/**
+	 * Calcula el ultimo dia de la semana
+	 * @param calendar Fecha para el calculo
+	 * @return ultimo dia de la semana
+	 */
+	public Calendar getEndDayOfWeek(final Calendar calendar);
+	
+	/**
+	 * @param calendar Calendario a setear el horario
+	 * @return Calendar con hora zero
+	 */
+	public Calendar setTimeZero(final Calendar calendar);
 }
