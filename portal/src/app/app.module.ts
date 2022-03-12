@@ -12,10 +12,13 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatButtonModule} from '@angular/material/button';
+import { NgChartsModule } from 'ng2-charts';
+import { GraphComponent } from './graph/graph.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    GraphComponent
   ],
   imports: [
     BrowserModule,
@@ -27,7 +30,8 @@ import {MatButtonModule} from '@angular/material/button';
     MatFormFieldModule,
     MatInputModule,
     MatPaginatorModule,
-    MatButtonModule
+    MatButtonModule,
+    NgChartsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

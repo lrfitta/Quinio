@@ -1,0 +1,9 @@
+#graph {
+    width: 50%;
+}
+
+#panel {
+    width: 80%;
+    margin: auto;
+    display: flex;
+}

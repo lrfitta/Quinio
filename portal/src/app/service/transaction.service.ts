@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { Observable } from 'rxjs';
-import { Report } from '../model/report';
+import { ResponseReport } from '../model/responseReport';
 
 @Injectable({
   providedIn: 'root'
@@ -12,9 +12,9 @@ export class TransactionService {
 
   constructor(private http: HttpClient) {}
 
-  public getReport(page: number, size : number = 5): Observable<Report[]> {
-    let endPoint = `${this.url}size=${size}&page=${page}`
-    return this.http.get<Report[]>(endPoint);
+  public getReport(page: number, size : number = 5): Observable<ResponseReport> {
+    let endPoint = `${this.url}size=${size}&page=${page}&startDate=10-10-2021&endDate=10-10-2021`
+    return this.http.get<ResponseReport>(endPoint);
   }
 
 }

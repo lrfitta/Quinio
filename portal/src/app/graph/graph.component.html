@@ -1,0 +1,21 @@
+<div id="panel">
+    <div id="graph">
+        <canvas baseChart 
+            type="bar"
+            [datasets]="barChartDataWeekly"
+            [labels]="labelWeekly"
+            [options]="barChartOptions"
+            >
+        </canvas>
+    </div>
+    <div id="graph">
+        <canvas baseChart 
+            type="line"
+            [datasets]="barChartDataDaily"
+            [labels]="labelDaily"
+            [options]="barChartOptions"
+        >
+        </canvas>
+    </div>
+</div>
+
