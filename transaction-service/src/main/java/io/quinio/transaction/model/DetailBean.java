@@ -1,4 +1,4 @@
-package io.quinio.transaction.bean;
+package io.quinio.transaction.model;
 
 import java.math.BigDecimal;
 

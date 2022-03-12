@@ -1,7 +1,7 @@
 package io.quinio.transaction.dao;
 
-import io.quinio.transaction.bean.ResponseBean;
 import io.quinio.transaction.exception.QuinioException;
+import io.quinio.transaction.model.MuVentaTransactionResponseBean;
 
 /**
  * @author Luis Angel Rodriguez Fitta
@@ -14,5 +14,5 @@ public interface IMuVentaDAO {
 	 * @param page NUmero de la pagina
 	 * @param size Numero de registros por pagina
 	 */
-	public ResponseBean getTransactions(final Integer page, final Integer size) throws QuinioException;
+	public MuVentaTransactionResponseBean getTransactions(final Integer page, final Integer size) throws QuinioException;
 }

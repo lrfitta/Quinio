@@ -6,6 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
+import io.quinio.transaction.model.ResponseBean;
+import io.quinio.transaction.openEnum.ResultEnum;
+
 /**
  * @author Luis Angel Rodriguez Fitta
  * Test TransactionService
@@ -17,9 +20,9 @@ public class TransactionServiceTest {
 	private ITransactionService service;
 	
 	@Test
-	public void recoverTransactions() {
-		Assertions.assertDoesNotThrow(() -> {
-			service.recoverTransactions();
-		});
+	public void generateReport() {
+		ResponseBean response = service.generateReport();
+		Assertions.assertNotNull(response);
+		Assertions.assertEquals(ResultEnum.SUCCESS, response.getResult());
 	} 
 }

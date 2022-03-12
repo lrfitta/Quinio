@@ -1,6 +1,6 @@
-package io.quinio.transaction.bean;
+package io.quinio.transaction.model;
 
-import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 import lombok.Data;
@@ -50,11 +50,11 @@ public class OriginBean {
 	/**
 	 * Campo actualdate
 	 */
-	private Timestamp actualdate;
+	private Date actualdate;
 	/**
 	 * Campo businessdate
 	 */
-	private Timestamp businessdate;
+	private Date businessdate;
 	/**
 	 * Campo transactionkey
 	 */

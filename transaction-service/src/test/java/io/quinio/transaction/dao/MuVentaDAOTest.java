@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
-import io.quinio.transaction.bean.ResponseBean;
+import io.quinio.transaction.model.MuVentaTransactionResponseBean;
 
 /**
  * @author Luis Angel Rodriguez Fitta
@@ -22,7 +22,7 @@ public class MuVentaDAOTest {
 	@Test
 	public void getTransactions() {
 		Assertions.assertDoesNotThrow(() -> {
-			ResponseBean response =  dao.getTransactions(0, 20);
+			MuVentaTransactionResponseBean response =  dao.getTransactions(0, 20);
 			Assertions.assertNotNull(response);
 		});
 	}

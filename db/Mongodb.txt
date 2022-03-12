@@ -1,4 +1,44 @@
 use quinio
+db.createCollection("Report",{
+	validator: {
+		$jsonSchema: {
+			bsonType:"object",
+			required:["startWeek", "numberWeek"],
+			properties: {
+				startWeek : {
+					bsonType: "date"
+				},
+				numberWeek: {
+					bsonType: "number"
+				},
+				bonusTransaction: {
+					bsonType: "number"
+				},
+				sales: {
+					bsonType: "number"
+				},
+				bonusAmount: {
+					bsonType: "number"
+				},
+				redemptionTransaction: {
+					bsonType: "number"
+				},
+				redeemedAmount: {
+					bsonType: "number"
+				},
+				expireTransaction: {
+					bsonType: "number"
+				},
+				expireAmount: {
+					bsonType: "number"
+				},
+				availableBalance: {
+					bsonType: "number"
+				}
+			}
+		}
+	}
+})
 db.createCollection("Transaction",{
 	validator: {
 		$jsonSchema: {

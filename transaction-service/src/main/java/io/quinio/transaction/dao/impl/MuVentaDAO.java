@@ -11,9 +11,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.client.RestTemplate;
 
-import io.quinio.transaction.bean.ResponseBean;
 import io.quinio.transaction.dao.IMuVentaDAO;
 import io.quinio.transaction.exception.QuinioException;
+import io.quinio.transaction.model.MuVentaTransactionResponseBean;
 import io.quinio.transaction.openEnum.CodeErrorEnum;
 import io.quinio.transaction.utils.Constants;
 
@@ -51,10 +51,10 @@ public class MuVentaDAO implements IMuVentaDAO {
 	 * @param size Numero de registros por pagina
 	 */
 	@Override
-	public ResponseBean getTransactions(Integer page, Integer size) throws QuinioException {
+	public MuVentaTransactionResponseBean getTransactions(Integer page, Integer size) throws QuinioException {
 		LOGGER.info("Page: " + page);
 		LOGGER.info("Size: " + size);
-		ResponseBean response = null;
+		MuVentaTransactionResponseBean response = null;
 		RestTemplate restTemplate = new RestTemplate();
 		
 		HttpHeaders headers = new HttpHeaders();
@@ -64,7 +64,7 @@ public class MuVentaDAO implements IMuVentaDAO {
 		
 		String tmp = String.format(endPointTransaction, page, size);
 		String url = host + tmp;
-		ResponseEntity<ResponseBean> responseEntity = restTemplate.exchange(url, HttpMethod.GET, requestEntity, ResponseBean.class);
+		ResponseEntity<MuVentaTransactionResponseBean> responseEntity = restTemplate.exchange(url, HttpMethod.GET, requestEntity, MuVentaTransactionResponseBean.class);
 		if(responseEntity != null && responseEntity.getStatusCode() == HttpStatus.OK) {
 			response = responseEntity.getBody();
 		} else {

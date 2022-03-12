@@ -1,4 +1,4 @@
-package io.quinio.transaction.bean;
+package io.quinio.transaction.model;
 
 
 import java.util.List;
@@ -12,7 +12,7 @@ import lombok.Data;
  * Response del service transactions
  */
 @Data
-public class ResponseBean {
+public class MuVentaTransactionResponseBean {
 	/**
 	 * Campo content
 	 */

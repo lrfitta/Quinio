@@ -1,6 +1,6 @@
-package io.quinio.transaction.bean;
+package io.quinio.transaction.model;
 
-import java.sql.Timestamp;
+import java.util.Date;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -12,7 +12,7 @@ import lombok.Data;
 
 /**
  * @author Luis Angel Rodriguez Fitta
- * Objeto para almacenar las transaciones del servicio
+ * Mapeo de la coleccion Transaction
  */
 @Data
 @Document(collection = "Transaction")
@@ -64,11 +64,11 @@ public class TransactionBean {
 	/**
 	 * Campo expirationDate
 	 */
-	private Timestamp expirationDate;
+	private Date expirationDate;
 	/**
 	 * Campo createdAt
 	 */
-	private Timestamp createdAt;
+	private Date createdAt;
 	/**
 	 * Campo status
 	 */
