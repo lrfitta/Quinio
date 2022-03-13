@@ -15,11 +15,12 @@ export class GraphComponent implements OnInit {
   public set weekly(datos : Graph[]) {
     this.barChartDataWeekly = [];
     this.labelWeekly = [];
-    
+    let data : number[] = []
     for (const index in datos) {
       this.barChartDataWeekly.push({ data: [datos[index].value], label: datos[index].label });
-      this.labelWeekly.push(datos[index].label);
     }
+    this.labelWeekly.push("Bonificacion");
+
   }
   
 

@@ -12,8 +12,8 @@ export class TransactionService {
 
   constructor(private http: HttpClient) {}
 
-  public getReport(page: number, size : number = 5): Observable<ResponseReport> {
-    let endPoint = `${this.url}size=${size}&page=${page}&startDate=10-10-2021&endDate=10-10-2021`
+  public getReport(page: number, startDate: string, endDate:  string, size : number = 5): Observable<ResponseReport> {
+    let endPoint = `${this.url}size=${size}&page=${page}&startDate=${startDate}&endDate=${endDate}`
     return this.http.get<ResponseReport>(endPoint);
   }
 

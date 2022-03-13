@@ -14,11 +14,17 @@ import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatButtonModule} from '@angular/material/button';
 import { NgChartsModule } from 'ng2-charts';
 import { GraphComponent } from './graph/graph.component';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatNativeDateModule, MAT_DATE_FORMATS } from '@angular/material/core';
+import {MatDialogModule} from '@angular/material/dialog';
+import { MessageComponent } from './message/message.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    GraphComponent
+    GraphComponent,
+    MessageComponent
   ],
   imports: [
     BrowserModule,
@@ -31,7 +37,11 @@ import { GraphComponent } from './graph/graph.component';
     MatInputModule,
     MatPaginatorModule,
     MatButtonModule,
-    NgChartsModule
+    NgChartsModule,
+    MatDatepickerModule,
+    ReactiveFormsModule,
+    MatNativeDateModule,
+    MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]

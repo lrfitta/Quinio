@@ -1,7 +1,11 @@
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { Component, ViewChild } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import * as moment from 'moment';
+import { MessageComponent } from './message/message.component';
 import { Graph } from './model/graph';
 import { Report } from './model/report';
 import { TransactionService } from './service/transaction.service';
@@ -23,13 +27,19 @@ export class AppComponent {
   dataSource : MatTableDataSource<Report> = new MatTableDataSource();
 
   beforeButton : boolean = false;
-  afterButton : boolean = true;
+  afterButton : boolean = false;
 
   daily : Graph[] = []
   weekly : Graph[] = []
+
+  range = new FormGroup({
+    start: new FormControl("",Validators.required),
+    end: new FormControl("",Validators.required),
+  });
+
+  public showOverlay = false;
   
-  constructor(private service : TransactionService, private _liveAnnouncer: LiveAnnouncer) {
-    this.generateReport();
+  constructor(private service : TransactionService, private _liveAnnouncer: LiveAnnouncer, private dialog: MatDialog) {
   }
 
   announceSortChange(sortState : any) {
@@ -60,15 +70,37 @@ export class AppComponent {
       this.page -= 1;
     }
 
-    this.generateReport()
+    this.find()
   }
 
   onlyNumber(event : any) {
     return (event.charCode >= 48 && event.charCode <= 57)
   }
 
-  generateReport() {
-    this.service.getReport(this.page).subscribe(report => {
+  find() {
+    
+    if(!this.range.invalid) {
+      let start = this.range.controls["start"].value;
+      let end = this.range.controls["end"].value;
+      let startDate = (moment(start)).format('DD-MM-YYYY')
+      let endDate = (moment(end)).format('DD-MM-YYYY')
+      this.generateReport(startDate, endDate)
+    } else {
+      this.showError("Las fechas ingresadas son incorrectas");
+    }
+  }
+
+  showError(error:  string) {
+    this.dialog.open(MessageComponent, {
+      data: {
+        error,
+      },
+    });
+  }
+
+  generateReport(startDate: string, endDate: string) {
+    this.showOverlay = true;
+    this.service.getReport(this.page, startDate, endDate).subscribe(report => {
       if(report.result == "SUCCESS") {
         this.dataSource = new MatTableDataSource(report.data);
         this.dataSource.sort = this.sort;
@@ -81,8 +113,9 @@ export class AppComponent {
         }
         
       } else {
-        alert(report.codeError + " - " + report.description);
+        this.showError(report.codeError + " - " + report.description);
       }
+      this.showOverlay = false;
     });
   }
 }
