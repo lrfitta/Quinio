@@ -20,11 +20,11 @@ import org.springframework.stereotype.Service;
 
 import io.quinio.transaction.dao.IMuVentaDAO;
 import io.quinio.transaction.exception.QuinioException;
+import io.quinio.transaction.model.GenerateReportResponseBean;
 import io.quinio.transaction.model.MuVentaTransactionResponseBean;
 import io.quinio.transaction.model.ReportBean;
 import io.quinio.transaction.model.ReportRequestBean;
 import io.quinio.transaction.model.ReportResponseBean;
-import io.quinio.transaction.model.ResponseBean;
 import io.quinio.transaction.model.TransactionBean;
 import io.quinio.transaction.openEnum.CodeErrorEnum;
 import io.quinio.transaction.openEnum.ResultEnum;
@@ -63,8 +63,8 @@ public class TransactionService implements ITransactionService {
 	 * @throws QuinioException
 	 */
 	@Override
-	public ResponseBean generateReport() {
-		ResponseBean response = new ResponseBean();
+	public GenerateReportResponseBean generateReport() {
+		GenerateReportResponseBean response = new GenerateReportResponseBean();
 		response.setResult(ResultEnum.SUCCESS);
 		int page = 0;
 		boolean flag = true;
@@ -77,6 +77,8 @@ public class TransactionService implements ITransactionService {
 				flag = !responseMuVenta.getLast();
 				page += 1;
 			}
+			response.setWeekGenerated(reports.size());
+			response.setTransactions(responseMuVenta.getTotalElements());
 			reportRepository.saveAll(reports);
 		} catch (QuinioException exception) {
 			LOGGER.error("Error: ", exception);

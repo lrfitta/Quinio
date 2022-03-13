@@ -8,9 +8,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import io.quinio.transaction.model.GenerateReportResponseBean;
 import io.quinio.transaction.model.ReportRequestBean;
 import io.quinio.transaction.model.ReportResponseBean;
-import io.quinio.transaction.model.ResponseBean;
 import io.quinio.transaction.service.ITransactionService;
 
 @SpringBootApplication
@@ -28,7 +28,7 @@ public class TransactionServiceApplication {
 	 * @return
 	 */
 	@Bean
-    public Supplier<ResponseBean> generateReport() {
+    public Supplier<GenerateReportResponseBean> generateReport() {
         return () -> {
             return transactionService.generateReport();
         };

@@ -1,9 +1,9 @@
 package io.quinio.transaction.service;
 
 import io.quinio.transaction.exception.QuinioException;
+import io.quinio.transaction.model.GenerateReportResponseBean;
 import io.quinio.transaction.model.ReportRequestBean;
 import io.quinio.transaction.model.ReportResponseBean;
-import io.quinio.transaction.model.ResponseBean;
 
 /**
  * @author Luis Angel Rodriguez Fitta
@@ -14,7 +14,7 @@ public interface ITransactionService {
 	 * Metodo para generar el reporte de las transacciones
 	 * @throws QuinioException
 	 */
-	public ResponseBean generateReport();
+	public GenerateReportResponseBean generateReport();
 	
 	/**
 	 * Busca los reportes asociados
