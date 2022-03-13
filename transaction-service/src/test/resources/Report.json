@@ -1,0 +1,45 @@
+[{
+  "startWeek": "12-09-2021",
+  "numberWeek": 666666,
+  "bonusTransaction": 1,
+  "sales": 37.71,
+  "bonusAmount": 37.71,
+  "redemptionTransaction": 0,
+  "redeemedAmount": 0,
+  "expireTransaction": 0,
+  "expireAmount": 0,
+  "availableBalance": 37.71
+},{
+  "startWeek": "03-10-2021",
+  "numberWeek": 41,
+  "bonusTransaction": 18,
+  "sales": 66382.72,
+  "bonusAmount": 663.84,
+  "redemptionTransaction": 0,
+  "redeemedAmount": 0,
+  "expireTransaction": 0,
+  "expireAmount": 0,
+  "availableBalance": 663.84
+},{
+  "startWeek": "10-10-2021",
+  "numberWeek": 42,
+  "bonusTransaction": 6,
+  "sales": 17307.16,
+  "bonusAmount": 518.33,
+  "redemptionTransaction": 9,
+  "redeemedAmount": -516,
+  "expireTransaction": 0,
+  "expireAmount": 0,
+  "availableBalance": 2.33
+},{
+  "startWeek": "17-10-2021",
+  "numberWeek": 43,
+  "bonusTransaction": 1,
+  "sales": 15.5,
+  "bonusAmount": 0.16,
+  "redemptionTransaction": 7,
+  "redeemedAmount": -52.84,
+  "expireTransaction": 1,
+  "expireAmount": -0.9,
+  "availableBalance": -51.78
+}]
